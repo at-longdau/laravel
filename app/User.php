@@ -2,17 +2,32 @@
 
 namespace App;
 
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    // Other Eloquent Properties...
+    use Notifiable;
 
     /**
-     * Get all of the tasks for the user.
+     * The attributes that are mass assignable.
+     *
+     * @var array
      */
-    public function tasks()
-    {
+    public function tasks(){
         return $this->hasMany(Task::class);
     }
+
+    protected $fillable = [
+        'name', 'email', 'password',
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
 }
